@@ -8,27 +8,27 @@ const Footer = () => {
             background: `url(${footer})`,
             backgroundSize: 'cover'
         }}>
-            <div className="footer">
+            <div className="footer lg:justify-items-center">
                 <div>
-                    <span className="footer-title">SERVICES</span>
-                    <Link to={'/'} className="link link-hover">Emergency Checkup</Link>
-                    <Link to={'/'} className="link link-hover">Monthly Checkup</Link>
-                    <Link to={'/'} className="link link-hover">Weekly Checkup</Link>
-                    <Link to={'/'} className="link link-hover">Deep Checkup</Link>
+                    <span className="footer-title font-bold text-xl">SERVICES</span>
+                    <Link to={'/'} className="link link-hover text-base">Emergency Checkup</Link>
+                    <Link to={'/'} className="link link-hover text-base">Monthly Checkup</Link>
+                    <Link to={'/'} className="link link-hover text-base">Weekly Checkup</Link>
+                    <Link to={'/'} className="link link-hover text-base">Deep Checkup</Link>
                 </div>
                 <div>
-                    <span className="footer-title">ORAL HEALTH</span>
-                    <Link to={'/'} className="link link-hover">Fluoride Treatment</Link>
-                    <Link to={'/'} className="link link-hover">Cavity Filling</Link>
-                    <Link to={'/'} className="link link-hover">Teath Whitening</Link>
+                    <span className="footer-title font-bold text-xl">ORAL HEALTH</span>
+                    <Link to={'/'} className="link link-hover text-base">Fluoride Treatment</Link>
+                    <Link to={'/'} className="link link-hover text-base">Cavity Filling</Link>
+                    <Link to={'/'} className="link link-hover text-base">Teeth Whitening</Link>
                 </div>
                 <div>
-                    <span className="footer-title">OUR ADDRESS</span>
-                    <Link to={'/'} className="link link-hover">New York - 101010 Hudson</Link>
+                    <span className="footer-title font-bold text-xl">OUR ADDRESS</span>
+                    <Link to={'/'} className="link link-hover text-base">New York - 101010 Hudson</Link>
                 </div>
             </div>
-            <div className='mt-10 my-3 text-center'>
-                <p>Copyright © 2022 - All right reserved by ACME Industries Ltd</p>
+            <div className='mt-36 text-center'>
+                <p>Copyright © 2022 - All right reserved</p>
             </div>
         </footer>
     );

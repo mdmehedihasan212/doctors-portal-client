@@ -2,9 +2,9 @@ import React from 'react';
 
 const InfoCard = ({ img, cardTitle, bgColor, cardDetails }) => {
     return (
-        <div className={`card lg:card-side shadow-xl ${bgColor}`}>
+        <div className={`card max-h-screen lg:card-side shadow-xl ${bgColor}`}>
             <figure>
-                <img className='pl-5' src={img} alt="icon" />
+                <img className='p-5 ' src={img} alt="icon" />
             </figure>
             <div className="card-body">
                 <h2 className="card-title text-white">{cardTitle}</h2>

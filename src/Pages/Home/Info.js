@@ -6,7 +6,7 @@ import phone from '../../assets/icons/phone.svg';
 
 const Info = () => {
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 px-12'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 my-16 px-12'>
             <InfoCard cardTitle='Opening Hours' cardDetails='Lorem Ipsum is simply dummy text of the pri' bgColor='bg-gradient-to-r from-secondary to-primary' img={clock}></InfoCard>
             <InfoCard cardTitle='Our Locations' cardDetails='Brooklyn, NY 10036, United States' bgColor='bg-accent' img={marker}></InfoCard>
             <InfoCard cardTitle='Contact Us' cardDetails='+000 123 456789' bgColor='bg-gradient-to-r from-secondary to-primary' img={phone}></InfoCard>

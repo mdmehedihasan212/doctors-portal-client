@@ -11,7 +11,7 @@ const Appointment = ({ date, setDate }) => {
             background: `url(${bg})`,
             backgroundSize: 'cover'
         }}>
-            <div className="hero-content flex-col lg:flex-row-reverse mt-40 gap-20 lg:gap-32">
+            <div className="hero-content flex-col lg:flex-row-reverse gap-20 lg:gap-32">
                 <img src={chair} className="max-w-sm lg:max-w-lg rounded-lg shadow-2xl" alt='img' />
                 <div className='rounded-lg shadow-xl'>
                     <DayPicker

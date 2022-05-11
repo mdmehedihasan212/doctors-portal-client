@@ -24,11 +24,8 @@ const SignUp = () => {
                             <span class="label-text">Password</span>
                         </label>
                         <input type="text" name="password" class="input input-bordered" />
-                        <label class="label">
-                            <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control mt-5">
                         <button class="btn bg-accent text-white text-md">Sign Up</button>
                     </div>
                     <div className='text-sm text-center'>
@@ -36,10 +33,7 @@ const SignUp = () => {
                             <Link to={'/login'} className='text-secondary ml-2 hover:link'>Please Login</Link>
                         </p>
                     </div>
-
-                    <div class="flex flex-col w-full border-opacity-50">
-                        <div class="divider">OR</div>
-                    </div>
+                    <div class="divider">OR</div>
                     <div class="form-control">
                         <button class="btn bg-white text-accent text-md hover:bg-white text-accent">Continue With Google</button>
                     </div>

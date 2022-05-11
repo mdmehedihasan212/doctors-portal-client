@@ -30,10 +30,7 @@ const Login = () => {
                             <Link to={'/signup'} className='text-secondary ml-2 hover:link'>Create new account</Link>
                         </p>
                     </div>
-
-                    <div class="flex flex-col w-full border-opacity-50">
-                        <div class="divider">OR</div>
-                    </div>
+                    <div class="divider">OR</div>
                     <div class="form-control">
                         <button class="btn bg-white text-accent text-md hover:bg-white text-accent">Continue With Google</button>
                     </div>

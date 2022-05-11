@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
     const menu = <>
         <li><Link to={'/'}>Home</Link></li>
-        <li><Link to={'/about'}>About</Link></li>
         <li><Link to={'/appointment'}>Appointment</Link></li>
         <li><Link to={'/reviews'}>Reviews</Link></li>
+        <li><Link to={'/about'}>About</Link></li>
         <li><Link to={'/contact'}>Contact Us</Link></li>
         <li><Link to={'/login'}>Login</Link></li>
     </>
@@ -21,10 +21,10 @@ const Navbar = () => {
                         {menu}
                     </ul>
                 </div>
-                <Link to={'/'} className="btn btn-ghost normal-case text-xl">Doctors Portal</Link>
+                <Link to={'/'} className="btn btn-ghost normal-case text-2xl pl-12 font-bold">Doctors Portal</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal p-0">
+                <ul className="menu menu-horizontal pl-20">
                     {menu}
                 </ul>
             </div>

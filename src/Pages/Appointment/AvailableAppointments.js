@@ -1,17 +1,12 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import useServices from '../../hooks/useServices';
 import BookingModal from './BookingModal';
 import Service from './Service';
 
 const AvailableAppointments = ({ date }) => {
-    const [services, setServices] = useState([]);
+    const [services] = useServices();
     const [treatment, setTreatment] = useState(null);
-
-    useEffect(() => {
-        fetch('services.json')
-            .then(res => res.json())
-            .then(data => setServices(data))
-    }, [])
 
     return (
         <section className='my-28 px-12'>

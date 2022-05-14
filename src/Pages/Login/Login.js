@@ -1,41 +1,42 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import SocialLogin from '../Shared/SocialLogin';
 
 const Login = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const onSubmit = data => {
+        console.log(data)
+    };
+
     return (
-        <div className="hero min-h-screen my-20">
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-xl bg-base-100">
-                <div className="card-body">
-                    <h1 className='text-center text-2xl text-primary'>Login</h1>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input type="text" name="email" className="input input-bordered" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Password</span>
-                        </label>
-                        <input type="text" name="password" className="input input-bordered" />
-                        <label className="label">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
-                    </div>
-                    <div className="form-control">
-                        <button className="btn bg-accent text-white text-md">Login</button>
-                    </div>
-                    <div className='text-sm text-center'>
-                        <p>New to Doctors Portal?
-                            <Link to={'/signup'} className='text-secondary ml-2 hover:link'>Create new account</Link>
-                        </p>
-                    </div>
-                    <div className="divider">OR</div>
+        <section className='flex justify-center items-center mx-auto h-screen'>
+            <div class="card w-96 bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <h1 class="card-title text-2xl text-center">Login</h1>
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text">Email</span>
+                            </label>
+                            <input
+                                {...register("email", { required: true })}
+                                type="email"
+                                class="input input-bordered w-full max-w-xs" />
+                            <label class="label">
+                                <span class="label-text-alt text-red-500">
+                                    {errors.email?.type === 'required' && "Email is required"}
+                                </span>
+                            </label>
+                        </div>
+                        <input className='btn w-full max-w-xs' value={"Login"} type="submit" />
+                    </form>
+                    <div class="divider">OR</div>
                     <SocialLogin></SocialLogin>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

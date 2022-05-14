@@ -1,13 +1,15 @@
 import React from 'react';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 import SocialLogin from '../Shared/SocialLogin';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate = useNavigate();
+
     const [
         createUserWithEmailAndPassword,
         user,
@@ -15,9 +17,16 @@ const SignUp = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
-    const onSubmit = data => {
+    const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
+
+    const onSubmit = async data => {
         console.log(data)
-        createUserWithEmailAndPassword(data.email, data.password)
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({
+            displayName: data.name
+        })
+        alert('Updated profile');
+        navigate('/')
     };
 
     let errorMessage;
@@ -26,12 +35,12 @@ const SignUp = () => {
         console.log(user);
     }
 
-    if (loading) {
+    if (loading || updating) {
         return <Loading></Loading>
     }
 
-    if (error) {
-        errorMessage = error.message;
+    if (error || updatingError) {
+        errorMessage = error?.message;
     }
 
     return (

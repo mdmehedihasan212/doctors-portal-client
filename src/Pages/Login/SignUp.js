@@ -1,49 +1,139 @@
 import React from 'react';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import auth from '../../firebase.init';
+import Loading from '../Shared/Loading';
 import SocialLogin from '../Shared/SocialLogin';
 
 const SignUp = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-    const handleSubmit = event => {
+    const onSubmit = data => {
+        console.log(data)
+        createUserWithEmailAndPassword(data.email, data.password)
+    };
 
+    let errorMessage;
+
+    if (user) {
+        console.log(user);
+    }
+
+    if (loading) {
+        return <Loading></Loading>
+    }
+
+    if (error) {
+        errorMessage = error.message;
     }
 
     return (
-        <div className="hero min-h-screen my-20">
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-xl bg-base-100">
+        <section className='flex justify-center items-center mx-auto h-screen'>
+            <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h1 className='text-center text-2xl text-primary'>Sign Up</h1>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Name</span>
-                        </label>
-                        <input type="text" name="name" className="input input-bordered" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input type="text" name="email" className="input input-bordered" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Password</span>
-                        </label>
-                        <input type="text" name="password" className="input input-bordered" />
-                    </div>
-                    <div onClick={handleSubmit} className="form-control mt-5">
-                        <button className="btn bg-accent text-white text-md">Sign Up</button>
-                    </div>
-                    <div className='text-sm text-center'>
-                        <p>My Doctors Portal Account?
-                            <Link to={'/login'} className='text-secondary ml-2 hover:link'>Please Login</Link>
-                        </p>
-                    </div>
+                    <h1 className="card-title text-3xl mb-5 justify-center text-secondary">Sign Up</h1>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: 'Name Is Required'
+                                    },
+                                    pattern: {
+                                        value: /[A-Za-z]{4}/,
+                                        message: 'Provide Valid Name'
+                                    }
+                                })}
+                                type="text"
+                                className="input input-bordered w-full max-w-xs" />
+                            <label className="label">
+                                {errors.name?.type === 'required' &&
+                                    <span className="label-text-alt text-red-500">{errors.name.message}</span>
+                                }
+                                {errors.name?.type === 'pattern' &&
+                                    <span className="label-text-alt text-red-500">{errors.name.message}</span>
+                                }
+                            </label>
+                        </div>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input
+                                {...register("email", {
+                                    required: {
+                                        value: true,
+                                        message: 'Email Is Required'
+                                    },
+                                    pattern: {
+                                        value: /[A-Za-z]{6}/,
+                                        message: 'Provide Valid Email'
+                                    }
+                                })}
+                                type="email"
+                                className="input input-bordered w-full max-w-xs" />
+                            <label className="label">
+                                {errors.email?.type === 'required' &&
+                                    <span className="label-text-alt text-red-500">{errors.email.message}</span>
+                                }
+                                {errors.email?.type === 'pattern' &&
+                                    <span className="label-text-alt text-red-500">{errors.email.message}</span>
+                                }
+                            </label>
+                        </div>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Password</span>
+                            </label>
+                            <input
+                                {...register("password", {
+                                    required: {
+                                        value: true,
+                                        message: 'Password Is Required'
+                                    },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password Minimum 6 Character'
+                                    }
+                                })}
+                                type="password"
+                                className="input input-bordered w-full max-w-xs" />
+                            <label className="label">
+                                {errors.password?.type === 'required' &&
+                                    <span className="label-text-alt text-red-500">{errors.password.message}</span>
+                                }
+                                {errors.password?.type === 'minLength' &&
+                                    <span className="label-text-alt text-red-500">{errors.password.message}</span>
+                                }
+                            </label>
+                            <label class="label pt-0 pb-2">
+                                <span className=' text-red-500 text-sm'>{errorMessage}</span>
+                            </label>
+                        </div>
+                        <input className='btn w-full max-w-xs' value={"Sign Up"} type="submit" />
+                        <div className='flex justify-center items-center text-sm mt-2'>
+                            <span>I have an account?</span>
+                            <span className='link-secondary ml-2 cursor-pointer'>
+                                <Link to={'/login'}>Please Login</Link>
+                            </span>
+                        </div>
+                    </form>
                     <div className="divider">OR</div>
                     <SocialLogin></SocialLogin>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

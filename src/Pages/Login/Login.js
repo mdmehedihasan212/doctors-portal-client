@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
@@ -15,10 +15,22 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+    const [
+        sendPasswordResetEmail,
+        ResetSending,
+        ResetError
+    ] = useSendPasswordResetEmail(auth);
+
     const onSubmit = data => {
         console.log(data)
         signInWithEmailAndPassword(data.email, data.password)
+
     };
+
+    // const handleResetPassword = data => {
+    //     sendPasswordResetEmail(data.email)
+    //     console.log(data?.email);
+    // }
 
     let errorMessage;
 
@@ -26,11 +38,11 @@ const Login = () => {
         console.log(user);
     }
 
-    if (loading) {
+    if (loading || ResetSending) {
         return <Loading></Loading>
     }
 
-    if (error) {
+    if (error || ResetError) {
         errorMessage = error.message;
     }
 
@@ -38,7 +50,7 @@ const Login = () => {
         <section className='flex justify-center items-center mx-auto h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h1 className="card-title text-3xl mb-5 justify-center">Login</h1>
+                    <h1 className="card-title text-3xl mb-5 justify-center text-secondary">Login</h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
@@ -92,14 +104,20 @@ const Login = () => {
                                 }
                             </label>
                             <label class="label pt-0 pb-3">
-                                <span class="label-text-alt text-sm cursor-pointer">Forget Password ?</span>
+                                <span
+                                    // onClick={handleResetPassword}
+                                    class="label-text-alt text-sm cursor-pointer">Forget Password ?</span>
+                            </label>
+                            <label class="label pt-0 pb-2">
+                                <span className=' text-red-500 text-sm'>{errorMessage}</span>
                             </label>
                         </div>
-                        <span className='p-2 text-red-500 text-sm'>{errorMessage}</span>
                         <input className='btn w-full max-w-xs' value={"Login"} type="submit" />
                         <div className='flex justify-center items-center text-sm mt-2'>
                             <span>New to Doctors Portal?</span>
-                            <span className='link-secondary ml-2 cursor-pointer'>Create new account</span>
+                            <span className='link-secondary ml-2 cursor-pointer'>
+                                <Link to={'/signup'}>Create new account</Link>
+                            </span>
                         </div>
                     </form>
                     <div className="divider">OR</div>

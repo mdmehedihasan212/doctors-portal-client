@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 import SocialLogin from '../Shared/SocialLogin';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+
     const [
         signInWithEmailAndPassword,
         user,
@@ -22,10 +27,15 @@ const Login = () => {
     ] = useSendPasswordResetEmail(auth);
 
     const onSubmit = data => {
-        console.log(data)
         signInWithEmailAndPassword(data.email, data.password)
-
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate(from, { replace: true });
+        }
+    }, [user])
+
 
     // const handleResetPassword = data => {
     //     sendPasswordResetEmail(data.email)
@@ -33,10 +43,6 @@ const Login = () => {
     // }
 
     let errorMessage;
-
-    if (user) {
-        console.log(user);
-    }
 
     if (loading || ResetSending) {
         return <Loading></Loading>

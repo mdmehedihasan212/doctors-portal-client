@@ -14,29 +14,31 @@ const MyAppointment = () => {
                 .then(data => setAppointments(data))
         }
     }, [user])
+    console.log(appointments);
 
     return (
         <div>
-            <h1>MyAppointment: {appointments.length}</h1>
             <div class="overflow-x-auto">
-                <table class="table table-compact w-full">
+                <table class="table w-full">
                     <thead>
                         <tr>
                             <th></th>
                             <th>Name</th>
-                            <th>Job</th>
-                            <th>company</th>
-                            <th>location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Treatment</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Littel, Schaden and Vandervort</td>
-                            <td>Canada</td>
-                        </tr>
+                        {
+                            appointments.map((appoint, index) => <tr>
+                                <th>{index + 1}</th>
+                                <td>{appoint.patientName}</td>
+                                <td>{appoint.date}</td>
+                                <td>{appoint.slot}</td>
+                                <td>{appoint.treatment}</td>
+                            </tr>)
+                        }
                     </tbody>
                 </table>
             </div>

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
-const BookingModal = ({ date, treatment, setTreatment }) => {
+const BookingModal = ({ date, treatment, setTreatment, refetch }) => {
     const { _id, name, slots } = treatment;
     const [user, loading] = useAuthState(auth);
 
@@ -27,9 +27,8 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
             phone: event.target.number.value
 
         }
-        console.log(booking);
 
-        fetch('http://localhost:5000/booking', {
+        fetch('https://fast-beach-59966.herokuapp.com/booking', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -38,20 +37,15 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-
                 if (data.success) {
                     toast(`Appointment is on ${formattedDate} at ${slot}`)
-                    console.log(true);
                 }
                 else {
                     toast.error(`Already an appointment on ${data.booking?.date} at ${data.booking?.slot}`)
-                    console.log(false);
                 }
+                setTreatment(null);
+                refetch();
             })
-
-        setTreatment(null)
-
 
     }
 

@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import 'animate.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import About from './Pages/About/About';
 import Appointment from './Pages/Appointment/Appointment';
 import Home from './Pages/Home/Home';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -130,7 +130,7 @@ const SignUp = () => {
                                     <span className="label-text-alt text-red-500">{errors.password.message}</span>
                                 }
                             </label>
-                            <label class="label pt-0 pb-2">
+                            <label className="label pt-0 pb-2">
                                 <span className=' text-red-500 text-sm'>{errorMessage}</span>
                             </label>
                         </div>

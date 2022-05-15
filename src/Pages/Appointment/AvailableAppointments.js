@@ -1,12 +1,21 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
-import useServices from '../../hooks/useServices';
+import React, { useEffect, useState } from 'react';
 import BookingModal from './BookingModal';
 import Service from './Service';
 
 const AvailableAppointments = ({ date }) => {
-    const [services] = useServices();
+    const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
+
+    const formattedDate = format(date, 'PP')
+    useEffect(() => {
+        const url = `http://localhost:5000/available?date=${formattedDate}`
+        console.log(url);
+        fetch(url)
+            // fetch(`http://localhost:5000/services`)
+            .then(res => res.json())
+            .then(data => setServices(data))
+    }, [formattedDate])
 
     return (
         <section className='my-28 px-12'>

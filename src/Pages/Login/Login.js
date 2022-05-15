@@ -109,12 +109,12 @@ const Login = () => {
                                     <span className="label-text-alt text-red-500">{errors.password.message}</span>
                                 }
                             </label>
-                            <label class="label pt-0 pb-3">
+                            <label className="label pt-0 pb-3">
                                 <span
                                     // onClick={handleResetPassword}
-                                    class="label-text-alt text-sm cursor-pointer">Forget Password ?</span>
+                                    className="label-text-alt text-sm cursor-pointer">Forget Password ?</span>
                             </label>
-                            <label class="label pt-0 pb-2">
+                            <label className="label pt-0 pb-2">
                                 <span className=' text-red-500 text-sm'>{errorMessage}</span>
                             </label>
                         </div>

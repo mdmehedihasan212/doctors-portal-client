@@ -15,17 +15,19 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        const slot = event.target.slot.value;
         const formattedDate = format(date, 'PP')
         const booking = {
             treatmentId: _id,
             treatment: name,
             date: formattedDate,
-            slot: event.target.slot.value,
+            slot,
             patient: user.displayName,
             email: user.email,
             phone: event.target.number.value
 
         }
+        console.log(booking);
 
         fetch('http://localhost:5000/booking', {
             method: 'POST',
@@ -37,8 +39,14 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+
                 if (data.success) {
-                    toast(`Appointment is on ${formattedDate} at ${slots}`)
+                    toast(`Appointment is on ${formattedDate} at ${slot}`)
+                    console.log(true);
+                }
+                else {
+                    toast.error(`Already an appointment on ${data.booking?.date} at ${data.booking?.slot}`)
+                    console.log(false);
                 }
             })
 

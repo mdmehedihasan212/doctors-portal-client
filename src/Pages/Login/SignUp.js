@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Loading from '../Shared/Loading';
 import SocialLogin from '../Shared/SocialLogin';
 
@@ -22,22 +23,13 @@ const SignUp = () => {
 
     const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
 
-    const onSubmit = async data => {
-        console.log(data)
-        await createUserWithEmailAndPassword(data.email, data.password)
-        await updateProfile({
-            displayName: data.name
-        })
-        navigate(from, { replace: true });
-    };
-
-    // useEffect(() => {
-    //     if (user) {
-
-    //     }
-    // }, [user, from, navigate])
+    const [token] = useToken(user)
 
     let errorMessage;
+
+    if (token) {
+        navigate(from, { replace: true });
+    }
 
     if (loading || updating) {
         return <Loading></Loading>
@@ -46,6 +38,16 @@ const SignUp = () => {
     if (error || updatingError) {
         errorMessage = error?.message;
     }
+
+
+    const onSubmit = async data => {
+        console.log(data)
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({
+            displayName: data.name
+        })
+    };
+
 
     return (
         <section className='flex justify-center items-center mx-auto h-screen'>
@@ -90,7 +92,7 @@ const SignUp = () => {
                                         message: 'Email Is Required'
                                     },
                                     pattern: {
-                                        value: /[A-Za-z]{6}/,
+                                        value: /[A-Za-z]{4}/,
                                         message: 'Provide Valid Email'
                                     }
                                 })}

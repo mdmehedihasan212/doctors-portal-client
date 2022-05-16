@@ -16,8 +16,13 @@ const MyAppointment = () => {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }
             })
-                .then(res => res.json())
-                .then(data => setAppointments(data))
+                .then(res => {
+                    console.log('res', res);
+                    return res.json()
+                })
+                .then(data => {
+                    setAppointments(data)
+                })
         }
     }, [user])
 
@@ -40,7 +45,7 @@ const MyAppointment = () => {
                     </thead>
                     <tbody>
                         {
-                            appointments.map((appoint, index) => <tr
+                            appointments?.map((appoint, index) => <tr
                                 key={index}>
                                 <th>{index + 1}</th>
                                 <td>{appoint.patientName}</td>

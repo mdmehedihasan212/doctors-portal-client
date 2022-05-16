@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -12,8 +12,6 @@ const SignUp = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    let from = location.state?.from?.pathname || "/";
-
     const [
         createUserWithEmailAndPassword,
         user,
@@ -26,10 +24,13 @@ const SignUp = () => {
     const [token] = useToken(user)
 
     let errorMessage;
+    let from = location.state?.from?.pathname || "/";
 
-    if (token) {
-        navigate(from, { replace: true });
-    }
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [token, from, navigate])
 
     if (loading || updating) {
         return <Loading></Loading>

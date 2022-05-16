@@ -8,6 +8,11 @@ import { signOut } from 'firebase/auth';
 const Navbar = () => {
     const [user, loading] = useAuthState(auth);
 
+    const logOut = () => {
+        signOut(auth)
+        localStorage.removeItem('accessToken')
+    }
+
     const menu = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/appointment'}>Appointment</Link></li>
@@ -18,7 +23,9 @@ const Navbar = () => {
         }
         {
             user ?
-                <button onClick={() => signOut(auth)} className="btn btn-ghost capitalize text-base">Sign Out</button>
+                <button
+                    onClick={logOut}
+                    className="btn btn-ghost capitalize text-base">Sign Out</button>
                 :
                 <li><Link to={'/login'}>Login</Link></li>
         }

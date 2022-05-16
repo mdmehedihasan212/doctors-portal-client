@@ -28,7 +28,7 @@ const BookingModal = ({ date, treatment, setTreatment, refetch }) => {
 
         }
 
-        fetch('https://fast-beach-59966.herokuapp.com/booking', {
+        fetch('http://localhost:5000/booking', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

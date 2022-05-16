@@ -3,6 +3,7 @@ import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Loading from '../Shared/Loading';
 import SocialLogin from '../Shared/SocialLogin';
 
@@ -30,11 +31,13 @@ const Login = () => {
         signInWithEmailAndPassword(data.email, data.password)
     };
 
+    const [token] = useToken(user)
+
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [user])
+    }, [token, from, navigate])
 
 
     // const handleResetPassword = data => {

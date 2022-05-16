@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import Loading from '../Shared/Loading';
 
 const MyAppointment = () => {
 
     const [appointments, setAppointments] = useState([]);
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     useEffect(() => {
         if (user) {
-            fetch(`https://fast-beach-59966.herokuapp.com/booking?patient=${user.email}`)
+            fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+                method: 'GET',
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
                 .then(res => res.json())
                 .then(data => setAppointments(data))
         }
     }, [user])
-    console.log(appointments);
+
+    if (loading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div>
-            <div class="overflow-x-auto">
-                <table class="table w-full">
+            <div className="overflow-x-auto">
+                <table className="table w-full">
                     <thead>
                         <tr>
                             <th></th>
@@ -31,7 +40,8 @@ const MyAppointment = () => {
                     </thead>
                     <tbody>
                         {
-                            appointments.map((appoint, index) => <tr>
+                            appointments.map((appoint, index) => <tr
+                                key={index}>
                                 <th>{index + 1}</th>
                                 <td>{appoint.patientName}</td>
                                 <td>{appoint.date}</td>

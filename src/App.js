@@ -9,11 +9,13 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/Login/SignUp';
 import Navbar from './Pages/Shared/Navbar';
-import RequireAuth from './Authentication/RequirAuth';
+import RequireAuth from './Authentication/RequireAuth';
+import RequireAdmin from './Authentication/RequireAdmin';
 import DashBoard from './Pages/DashBoard/DashBoard';
 import MyAppointment from './Pages/DashBoard/MyAppointment';
 import MyReview from './Pages/DashBoard/MyReview';
 import Users from './Pages/DashBoard/Users';
+import AddDoctor from './Pages/DashBoard/AddDoctor';
 
 function App() {
   return (
@@ -33,7 +35,10 @@ function App() {
         }>
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path='review' element={<MyReview></MyReview>}></Route>
-          <Route path='users' element={<Users></Users>}></Route>
+          <Route path='users' element={<RequireAdmin><Users></Users>
+          </RequireAdmin>}></Route>
+          <Route path='addDoctor' element={<RequireAdmin><AddDoctor></AddDoctor>
+          </RequireAdmin>}></Route>
         </Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/login' element={<Login />}></Route>

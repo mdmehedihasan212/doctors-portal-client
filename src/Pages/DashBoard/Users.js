@@ -1,10 +1,16 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
+import UserRow from './UserRow';
 
 const Users = () => {
     const { data: users, isLoading } = useQuery('users', () =>
-        fetch('http://localhost:5000/users').then(res => res.json()))
+        fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(res => res.json()))
     console.log(users);
 
     if (isLoading) {
@@ -17,21 +23,18 @@ const Users = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        users.map(user => <tr>
-                            <th>1</th>
-                            <td>{user.email}</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>)
+                        users?.map((user) => <UserRow
+                            key={user._id}
+                            user={user}
+                        ></UserRow>)
                     }
-
                 </tbody>
             </table>
         </div>

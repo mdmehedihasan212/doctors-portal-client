@@ -8,6 +8,7 @@ const MyAppointment = () => {
     const [appointments, setAppointments] = useState([]);
     const [user, loading] = useAuthState(auth);
 
+    console.log(appointments);
     useEffect(() => {
         if (user) {
             fetch(`http://localhost:5000/booking?patient=${user.email}`, {

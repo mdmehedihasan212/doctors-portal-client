@@ -1,8 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const { data: services, isLoadin, refach } = useQuery('services', () => fetch('http://localhost:5000/services').then(res => res.json()))
 
     const onSubmit = async data => {
         console.log(data)
@@ -68,20 +71,41 @@ const AddDoctor = () => {
                     <label className="label">
                         <span className="label-text">Specialist</span>
                     </label>
-                    <input
-                        {...register("specialist", {
-                            required: {
-                                value: true,
-                                message: 'Specialist Is Required'
-                            }
-                        })}
-                        type="text"
-                        className="input input-bordered w-full max-w-xs" />
+                    <select {...register("specialist", {
+                        required: {
+                            value: true,
+                            message: 'Specialist Is Required'
+                        }
+                    })}
+                        class="select select-bordered w-full max-w-xs">
+                        {
+                            services.map(service => <option selected value={service.name}>{service.name}</option>)
+                        }
+                    </select>
                     <label className="label">
                         {errors.specialist?.type === 'required' &&
                             <span className="label-text-alt text-red-500">{errors.specialist.message}</span>
                         }
 
+                    </label>
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Photo</span>
+                    </label>
+                    <input
+                        {...register("photo", {
+                            required: {
+                                value: true,
+                                message: 'Photo Is Required'
+                            }
+                        })}
+                        type="file"
+                        className="input input-bordered w-full max-w-xs" />
+                    <label className="label">
+                        {errors.photo?.type === 'required' &&
+                            <span className="label-text-alt text-red-500">{errors.photo.message}</span>
+                        }
                     </label>
                 </div>
                 <input className='btn w-full max-w-xs' value={"Add Doctor"} type="submit" />

@@ -4,11 +4,11 @@ import Loading from '../Shared/Loading';
 import UserRow from './UserRow';
 
 const Users = () => {
-    const { data: users, isLoading } = useQuery('users', () =>
+    const { data: users, isLoading, refetch } = useQuery('users', () =>
         fetch('http://localhost:5000/users', {
             method: 'GET',
             headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
         }).then(res => res.json()))
     console.log(users);
@@ -18,8 +18,8 @@ const Users = () => {
     }
 
     return (
-        <div class="overflow-x-auto">
-            <table class="table w-full">
+        <div className="overflow-x-auto">
+            <table className="table w-full">
                 <thead>
                     <tr>
                         <th></th>
@@ -33,6 +33,7 @@ const Users = () => {
                         users?.map((user) => <UserRow
                             key={user._id}
                             user={user}
+                            refetch={refetch}
                         ></UserRow>)
                     }
                 </tbody>

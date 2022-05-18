@@ -1,8 +1,29 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
-const DoctorRow = ({ doctor, index }) => {
-    const { name, specialist, img } = doctor || {};
-    console.log(doctor);
+const DoctorRow = ({ doctor, index, refetch }) => {
+    const { name, specialist, img, email } = doctor;
+
+    const handleDelete = () => {
+        fetch(`http://localhost:5000/doctors/${email}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount) {
+                    toast.success(`Doctor: ${name} is delete`)
+                    refetch();
+                }
+                else {
+                    toast.error(`Failed doctor ${name} is delete`)
+                }
+            })
+    }
+
     return (
         <tr>
             <th>{index + 1}</th>
@@ -15,7 +36,7 @@ const DoctorRow = ({ doctor, index }) => {
             </td>
             <td>{name}</td>
             <td>{specialist}</td>
-            <td><button class="btn btn-error text-white">Delete</button></td>
+            <td><button onClick={handleDelete} class="btn btn-error text-white">Delete</button></td>
         </tr>
     );
 };

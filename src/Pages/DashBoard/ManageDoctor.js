@@ -5,7 +5,7 @@ import DoctorRow from './DoctorRow';
 
 const ManageDoctor = () => {
 
-    const { data: doctors, isLoading } = useQuery('doctors', () => fetch('http://localhost:5000/doctors', {
+    const { data: doctors, isLoading, refetch } = useQuery('doctors', () => fetch('http://localhost:5000/doctors', {
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -35,6 +35,7 @@ const ManageDoctor = () => {
                                 key={doctor._id}
                                 index={index}
                                 doctor={doctor}
+                                refetch={refetch}
                             ></DoctorRow>)
                         }
                     </tbody>

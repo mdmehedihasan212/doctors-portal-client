@@ -7,15 +7,15 @@ const DoctorRow = ({ doctor, index, setDeleteModal }) => {
         <tr>
             <th>{index + 1}</th>
             <td>
-                <div class="avatar">
-                    <div class="w-12">
+                <div className="avatar">
+                    <div className="w-12">
                         <img src={img} alt="doctors img" />
                     </div>
                 </div>
             </td>
             <td>{name}</td>
             <td>{specialist}</td>
-            <td><label onClick={() => setDeleteModal(doctor)} for="delete-modal" class="btn btn-sm btn-error text-white modal-button">Delete</label></td>
+            <td><label onClick={() => setDeleteModal(doctor)} for="delete-modal" className="btn btn-sm btn-error text-white modal-button">Delete</label></td>
         </tr>
     );
 };

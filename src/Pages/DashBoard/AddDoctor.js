@@ -125,7 +125,7 @@ const AddDoctor = () => {
                             message: 'Specialist Is Required'
                         }
                     })}
-                        class="select select-bordered w-full max-w-xs">
+                        className="select select-bordered w-full max-w-xs">
                         {
                             services.map(service => <option selected value={service.name}>{service.name}</option>)
                         }

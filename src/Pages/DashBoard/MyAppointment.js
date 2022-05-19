@@ -9,13 +9,12 @@ const MyAppointment = () => {
     const [appointments, setAppointments] = useState([]);
     const [user, loading] = useAuthState(auth);
 
-    console.log(appointments);
     useEffect(() => {
         if (user) {
             fetch(`http://localhost:5000/booking?patient=${user.email}`, {
                 method: 'GET',
                 headers: {
-                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }
             })
                 .then(res => {
@@ -49,7 +48,7 @@ const MyAppointment = () => {
                     </thead>
                     <tbody>
                         {
-                            appointments?.map((appoint, index) => <tr
+                            appointments.map((appoint, index) => <tr
                                 key={index}>
                                 <th>{index + 1}</th>
                                 <td>{appoint.patientName}</td>
@@ -61,7 +60,7 @@ const MyAppointment = () => {
                                         <button className='btn btn-sm btn-primary text-white'>Pay</button>
                                     </Link>}</td>
                                 <td>{(appoint.price && appoint.paid) &&
-                                    <button className='btn btn-sm btn-success text-white' disabled>Paid</button>
+                                    <button className='btn btn-sm btn-success text-white'>Paid</button>
                                 }</td>
                             </tr>)
                         }

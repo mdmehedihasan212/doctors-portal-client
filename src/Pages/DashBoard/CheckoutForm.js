@@ -9,7 +9,7 @@ const CheckoutForm = ({ payment }) => {
     const [transaction, setTransaction] = useState('');
     const [clientSecret, setClientSecret] = useState("");
 
-    const { price, patientName, patient } = payment;
+    const { _id, price, patientName, patient } = payment;
 
     useEffect(() => {
         fetch('http://localhost:5000/create-payment-intent', {
@@ -75,6 +75,26 @@ const CheckoutForm = ({ payment }) => {
             setSuccess('Congrats! Your payment completed')
             setTransaction(paymentIntent.id)
             console.log(paymentIntent);
+
+            // store payment on database 
+            const payment = {
+                appointment: _id,
+                transactionId: paymentIntent.id
+            }
+
+            // confirmation payment
+            fetch(`http://localhost:5000/payment/${_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json',
+                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(payment)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                })
         }
     }
 

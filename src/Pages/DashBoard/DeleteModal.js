@@ -2,7 +2,6 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
-    console.log(deleteModal);
     const { name, email } = deleteModal;
 
     const handleDelete = () => {
@@ -24,6 +23,7 @@ const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
                     toast.error(`Failed doctor ${name} is delete`)
                 }
             })
+
     }
 
     return (
